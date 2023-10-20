@@ -66,6 +66,7 @@
     "ts-pnp": "1.1.4",
     "typescript": "4.2.2",
     "url-loader": "2.1.0",
+    "uuid": "^9.0.1",
     "webpack": "4.41.0",
     "webpack-dev-server": "3.2.1",
     "webpack-manifest-plugin": "2.1.1",
