@@ -9,10 +9,10 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import {
-  ApiUseTags,
+  ApiTags,
   ApiOperation,
   ApiConsumes,
-  ApiImplicitFile,
+  ApiBody,
 } from '@nestjs/swagger';
 import { diskStorage } from 'multer';
 import * as fs from 'fs';
@@ -64,12 +64,12 @@ const zipFileFilter = (req, file, cb) => {
 };
 
 @Controller('/')
-@ApiUseTags('离线包')
+@ApiTags('离线包')
 export class PackageController {
   constructor(private readonly packageService: PackageService) {}
 
   @Post('getPackageInfoList')
-  @ApiOperation({ title: '获取离线包列表' })
+  @ApiOperation({ summary: '获取离线包列表' })
   async getPackageInfoList(@Body() dto: QueryPackageDto) {
     return await this.packageService.getPackageInfoList(dto);
   }
@@ -84,9 +84,20 @@ export class PackageController {
       fileFilter: zipFileFilter,
     }),
   )
-  @ApiOperation({ title: '上传离线包' })
+  @ApiOperation({ summary: '上传离线包' })
   @ApiConsumes('multipart/form-data')
-  @ApiImplicitFile({ name: 'file', required: true })
+  // @ApiImplicitFile({ name: 'file', required: true })
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
   async pushPackageInfo(@Body() dto: CreatePackageDto) {
     const { moduleName, version, ...otherDto } = dto;
     const versionNo = parseInt(version, 10);
@@ -112,19 +123,19 @@ export class PackageController {
   }
 
   @Post('deletePackage')
-  @ApiOperation({ title: '删除发布某次发布的离线包' })
+  @ApiOperation({ summary: '删除发布某次发布的离线包' })
   async deletePackage(@Body() dto: DeletePackageDto) {
     return await this.packageService.deletePackage(dto.id);
   }
 
   @Post('stopPackage')
-  @ApiOperation({ title: '终止发布某个离线包状态' })
+  @ApiOperation({ summary: '终止发布某个离线包状态' })
   async stopPackage(@Body() dto: StopPackageDto) {
     return await this.packageService.stopPackage(dto.id);
   }
 
   @Get('getPackageIndex')
-  @ApiOperation({ title: '获取最新版本离线包集合的json' })
+  @ApiOperation({ summary: '获取最新版本离线包集合的json' })
   async getPackageIndex(@Query() query: GetLatestPackageDto) {
     const latestPackageList = await this.packageService.getLatestPackageList(query.appName);
     return latestPackageList;

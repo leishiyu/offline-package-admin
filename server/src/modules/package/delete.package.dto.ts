@@ -1,9 +1,9 @@
 import { IsNotEmpty, IsNumber } from 'class-validator';
-import { ApiModelProperty } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class DeletePackageDto {
   @IsNotEmpty()
   @IsNumber()
-  @ApiModelProperty()
+  @ApiProperty()
   id: number;
 }

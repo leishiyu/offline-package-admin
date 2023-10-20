@@ -1,4 +1,4 @@
-declare module 'bsdiff-nodejs';
+declare module 'bsdiff-node';
 
 declare namespace NodeJS {
   export interface Global {

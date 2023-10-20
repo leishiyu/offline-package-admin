@@ -5,33 +5,33 @@ import {
   IsOptional,
   MaxLength,
 } from 'class-validator';
-import { ApiModelProperty } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class QueryPackageDto {
   @IsNotEmpty()
   @IsNumber()
-  @ApiModelProperty()
+  @ApiProperty()
   page: number;
 
   @IsNotEmpty()
   @IsNumber()
-  @ApiModelProperty()
+  @ApiProperty()
   size: number;
 
   @IsOptional()
   @IsString()
-  @ApiModelProperty()
+  @ApiProperty()
   @MaxLength(10, { message: '不能超过10个字' })
   moduleName: string;
 
   @IsOptional()
   @IsString()
-  @ApiModelProperty()
+  @ApiProperty()
   @MaxLength(10, { message: '不能超过10个字' })
   appName: string;
 
   @IsOptional()
   @IsNumber()
-  @ApiModelProperty()
+  @ApiProperty()
   status: number;
 }
