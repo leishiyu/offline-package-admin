@@ -1,4 +1,4 @@
-import * as bsdiff from 'bsdiff-nodejs';
+import * as bsdiff from 'bsdiff-node';
 import * as fs from 'fs';
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -123,16 +123,16 @@ export class PackageService {
       .catch(error => Logger.log('service: getLatestVersion', error));
   }
 
-  async stopPackage(id: number) {
+  async stopPackage(id: any) {
     return this.packageEntity
-      .findOneOrFail({ id })
+      .findOneOrFail( id )
       .then(() => this.packageEntity.update({ id }, { status: 0 }))
       .then(() => null);
   }
 
-  async deletePackage(id: number) {
+  async deletePackage(id: any) {
     return this.packageEntity
-      .findOneOrFail({ id })
+      .findOneOrFail( id )
       .then(() => this.packageEntity.delete({ id }))
       .then(() => null);
   }
